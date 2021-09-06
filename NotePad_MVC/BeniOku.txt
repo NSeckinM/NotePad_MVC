@@ -1,0 +1,5 @@
+﻿Database de Değişiklikler yaptığımız için migrationları sildik ve yeniden ekledik
+istediğimiz dosyanın içine eklenmesi için aşağıdaki komutu çalıştırdık.
+
+
+add-migration Initial -OutputDir "Data/Migrations"
