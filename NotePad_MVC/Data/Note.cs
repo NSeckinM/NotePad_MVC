@@ -19,7 +19,7 @@ namespace NotePad_MVC.Data
         public string Content { get; set; }
 
 
-        [ForeignKey("Author")]
+        [ForeignKey("Author"),Required]
         public string AuthorId { get; set; }
 
         public ApplicationUser Author { get; set; }

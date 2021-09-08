@@ -4,21 +4,44 @@
     ViewData["Title"] = "My Notes";
 }
 
-<a asp-controller="Notes" asp-action="Yeni" class="btn btn-outline-primary">Yeni Not Ekle</a>
+@if (Model.Count == 0)
+{
+    <p>Üzgünüm,Gösterilecek bir notun yok</p>
+}
+else
+{
+    <table class="table table-hover">
 
- @if (Model.Count == 0)
- {
-     <p>Üzgünüm,Gösterilecek bir notun yok</p>
- }
- else
-	{
-		<ul>
-			@foreach (Note note in Model)
+        <thead>
+            <tr>
+                <th>Note</th>
+                <th>Sil</th>
+                <th>Düzenle</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (Note note in Model)
             {
-				<li>
-					<strong>@note.Title</strong><br />
-					@note.Content
-				</li>
+                <tr>
+                    <td>
+
+                        <strong>@note.Title</strong> <br />
+                        <span>@note.Content</span>
+                    </td>
+                    <td>
+                        <a asp-controller="Notes" asp-action="Sil" asp-route-id="@note.Id" class="btn btn-danger">Sil</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Notes" asp-action="Duzenle" asp-route-id="@note.Id" class="btn btn-info">Düzenle</a>
+                    </td>
+                </tr>
             }
-		</ul>
-	}
+
+
+        </tbody>
+
+    </table>
+
+}
+    <a asp-controller="Notes" asp-action="Yeni" class="btn btn-outline-secondary m-3">Yeni Not Ekle</a>
