@@ -62,5 +62,40 @@ namespace NotePad_MVC.Controllers
         }
 
 
+        public IActionResult Duzenle(int id)
+        {
+            Note note = db.Notes.Where(x => x.Id == id && x.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
+            if (note==null)
+            {
+                return NotFound();
+            }
+
+            DuzenleViewModel dvm = new DuzenleViewModel();
+            dvm.Id = note.Id;
+            dvm.Title = note.Title;
+            dvm.Content = note.Content;
+
+            return View(dvm);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Duzenle(DuzenleViewModel dvm)
+        {
+
+            if (ModelState.IsValid)
+            {
+                Note note = db.Notes.Where(x => x.Id == dvm.Id && x.AuthorId == User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault();
+                note.Id = dvm.Id;
+                note.Title = dvm.Title;
+                note.Content = dvm.Content;
+               
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+
+            }
+
+            return View();
+        }
+
     }
 }
