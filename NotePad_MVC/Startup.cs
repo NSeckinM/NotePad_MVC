@@ -35,6 +35,7 @@ namespace NotePad_MVC
             //tabi bu ayarlar defaul olarak ayarlanýyor ekstra degistirmek istersen alt satýrdaki gibi lamda operatörü ile manüple edebiliyoruz.
             //örnek olarak Email onaylamasýný falsa cektik
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<IdentityRole>()// seed de roll tanýmlayabilmek için ekledik.
                 .AddEntityFrameworkStores<ApplicationDbContext>();//bu satýr identit kullanýcý bilgilerini entityde tuttuyor kullanýcý oluþturmak için kullandýðýmýz claslarý aktif ediyor(userstore=kullanýcý depolama class ý Rolestroe = rolleri eklemek ve yönetmek için kullanýlan class)
             services.AddControllersWithViews();
         }

@@ -3,10 +3,10 @@
 <form asp-controller="Notes" asp-action="Sil" method="post">
     <div class="form-control">
         <input asp-for="Id" type="hidden" />
-        <span> @Model.Content  içerikli @Model.Title' notu silinecektir onaylıyor musunuz ?  </span>
+        <span> <strong>@Model.Content</strong> içerikli <strong>@Model.Title'</strong> notu silinecektir onaylıyor musunuz ?  </span>
     </div>
     <div class="mt-3">
         <button class="btn btn-primary">Evet,Sil</button>
     </div>
-    
 </form>
+<a asp-controller="Home" asp-action="Index" class="m-2"> Geri dön </a>
