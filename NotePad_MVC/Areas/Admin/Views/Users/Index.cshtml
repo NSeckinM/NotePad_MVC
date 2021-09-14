@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<ApplicationUser>
+@inject UserManager<ApplicationUser> UserManager
+@{
+
+    ViewBag.Title = "Users";
+}
+
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Registration Time</th>
+            <th>Active</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var user in Model)
+        {
+
+            bool active = !await UserManager.IsLockedOutAsync(user);
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.RegistrationTime</td>
+                <td>
+                    <input type="checkbox" @(active ? "Checked" : "" ) data-user-change-status="@user.Id" />
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+@section Scripts{
+
+    <script>
+    $("[data-user-change-status]").change(function (event) {
+
+        var chk = this;
+        var checked = $(chk).prop("checked");
+        var userId = $(chk).data("user-change-status");
+        $.post("@Url.Action("ChangeStatus","Users")", { userId: userId, active: checked }, function (data) {
+
+            toastr.success("Status Changed!");
+
+        });
+
+    });
+
+
+
+    </script>
+
+}
