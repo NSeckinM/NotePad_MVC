@@ -1,0 +1,47 @@
+﻿@model ProfilePhotoViewModel
+@{
+    ViewData["Title"] = "Profile Photo";
+}
+
+@if (Model.Yuklendi)
+{
+    <div class="alert alert-success">
+        Photo Succesfully uploaded.
+    </div>
+}
+
+<h1>Profile Photo</h1>
+
+<div class="d-flex">
+
+    <div class="text-center">
+
+        @if (string.IsNullOrEmpty(Model.Foto))
+        {
+            <img src="~/img/NoAvatar.png" alt="no profile photo" width="200" height="200" /> <br />
+        }
+        else
+        {
+            <img src="~/uploads/@Model.Foto" alt="profile photo" width="200" height="200" /> <br />
+            <form asp-controller="ProfilePhoto" asp-action="DeletePhoto" method="post">
+                <button class="btn btn-link">Delete Photo</button>
+            </form>
+        }
+
+    </div>
+
+    <form class="p-5" method="post" enctype="multipart/form-data">
+        @*form ile dosya göndermek istiyorsak bunu kullanmalıyız*@
+        <label for="photo">Yüklenecek resim:</label> <br />
+        <input type="file" accept="image/*" name="photo" id="photo" /> @*sadece image türünden file kabul eden input*@
+        <button class="btn btn-outline-primary">Yükle</button>
+        <div class="text-danger">
+            @Html.ValidationMessage("photo") @*htmlhelper kullandık photo anahtar kelimeli bir hata alırsa gösterecek modelden parametreye gerek kalmadı*@
+        </div>
+    </form>
+
+
+
+
+
+</div>
