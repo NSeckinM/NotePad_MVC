@@ -15,14 +15,9 @@
 <div class="d-flex">
 
     <div class="text-center">
-
-        @if (string.IsNullOrEmpty(Model.Foto))
+        <vc:profile-photo genislik="200" yukseklik="200" sinif=""/>
+        @if (!string.IsNullOrEmpty(Model.Foto))
         {
-            <img src="~/img/NoAvatar.png" alt="no profile photo" width="200" height="200" /> <br />
-        }
-        else
-        {
-            <img src="~/uploads/@Model.Foto" alt="profile photo" width="200" height="200" /> <br />
             <form asp-controller="ProfilePhoto" asp-action="DeletePhoto" method="post">
                 <button class="btn btn-link">Delete Photo</button>
             </form>

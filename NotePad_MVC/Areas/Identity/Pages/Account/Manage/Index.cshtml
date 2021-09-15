@@ -1,11 +1,10 @@
 ﻿@page
-@inject UserManager<ApplicationUser> UserMAnager
+
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
-    var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
-    var user = UserMAnager.Users.First(x => x.Id == userId);
+
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -27,14 +26,7 @@
         </form>
     </div>
     <div class="col-md-6 text-center">
-        @if (string.IsNullOrEmpty(user.Photo))
-        {
-            <img src="~/img/NoAvatar.png" alt="no profile photo" class="border rounded p-1" width="200" height="200" /> 
-        }
-        else
-        {
-            <img src="~/uploads/@user.Photo" class="border rounded p-1" alt="profile photo" width="200" height="200" />
-        }
+        <vc:profile-photo genislik="200" yukseklik="200" sinif="rounded border p-1" />
         <br />
         <span>(<a asp-area="" asp-controller="ProfilePhoto" asp-action="Index">Update Photo</a>)</span>
     </div>
