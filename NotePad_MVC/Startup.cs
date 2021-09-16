@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NotePad_MVC.Data;
+using NotePad_MVC.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +36,10 @@ namespace NotePad_MVC
             //identity hizmetlerini ekliyor usermanagerclaslarýný default kullanýcý arayüzünü ayrýca giriþ yapýldýðýnda identity coockies leri býrakýyor
             //tabi bu ayarlar defaul olarak ayarlanýyor ekstra degistirmek istersen alt satýrdaki gibi lamda operatörü ile manüple edebiliyoruz.
             //örnek olarak Email onaylamasýný falsa cektik
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()// seed de roll tanýmlayabilmek için ekledik.
                 .AddEntityFrameworkStores<ApplicationDbContext>();//bu satýr identit kullanýcý bilgilerini entityde tuttuyor kullanýcý oluþturmak için kullandýðýmýz claslarý aktif ediyor(userstore=kullanýcý depolama class ý Rolestroe = rolleri eklemek ve yönetmek için kullanýlan class)
+            services.AddTransient<IEmailSender, EmailSender>();// parola sýfýrlamak için e mail alaný
             services.AddControllersWithViews();
         }
 
